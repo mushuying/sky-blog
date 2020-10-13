@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "My blog.",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve .",
+    "build": "skyblog build"
+  },
+  "keywords": [
+    "Blog"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "serve": "^9.4.0"
+  },
+  "pre-commit": [
+    "build",
+    "add"
+  ]
+}

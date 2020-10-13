@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% if(keywords){ %>
+    <meta name="keywords" content="<%= keywords %>" />
+    <% } %>
+    <meta name="description" content="<%= intro %>" />
+    <meta name="og:site_name" content="<%= author %>'s Blog" />
+    <meta name="og:image" content="/static/images/common/avatar.png" />
+    <meta name="og:url" content="<%= currentUrl %>" />
+    <meta name="og:title" content="<%= title %>" />
+    <meta name="og:description" content="<%= intro %>" />
+    <link href="<%= markdownCss %>" rel="stylesheet" />
+    <link href="<%= highlightCss %>" rel="stylesheet" />
+    <link rel="shortcut icon" href="/static/images/common/favicon.ico" type="image/x-icon" />
+    <link href="/static/css/blog.css" rel="stylesheet" />
+    <link href="/static/iconfonts/icons/icons.css" rel="stylesheet" />
+    <title><%= title %>-<%= tag %></title>
+  </head>
+  <body>
+    <%- htmlMenu %>
+    <div class="site-wrapper">
+      <header id="header" class="header">
+        <div class="center">
+          <h1 class="title"><%= title %></h1>
+          <p class="author"><img src="/static/images/common/favicon.ico" /><%= author %> | <%= type %></p>
+          <p class="intro"><%= intro %></p>
+        </div>
+      </header>
+      <script>
+        var header = document.getElementById('header');
+        var themes = [
+          'mooonlit', 'cool_blue', 'evening_sunshing', 'memariani', 'kye_meh',
+          'by_design', 'red_sunset', 'pun_yeta', 'nepal', 'deep_space', 'curiosity_blue',
+          'purple_bliss', 'miaka', 'sky'
+        ];
+        function random(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        const theme = themes[random(0, themes.length - 1)];
+        header.classList.add(theme);
+      </script>
+      <div class="markdown-body">
+        <% if(type === '原创') { %>
+        <div class="copyright">
+          本文由 <a href="/"><%= author %></a> 创作，采用 <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh">知识共享署名 3.0 (CC BY-NC-ND 3.0)</a> 国际许可协议进行许可, 转载请注明出处，禁止商业性使用，禁止演绎。
+        </div>
+        <% } %>
+        <%- pureHtml %>
+        <% if(disqusUrl) { %>
+          <div style="margin-top: 80px;" id="disqus_thread"></div>
+          <script>
+            var disqus_config = function () {
+            this.page.url = '<% currentUrl %>';  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = '<% title %>'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '<%= disqusUrl %>';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <% } %>
+      </div>
+      <footer class="copyright">
+        <span><b><a href="/"><%= name %></a></b> All rights reserved. Powerd by <a style="color: #f59200" href="https://github.com/PengJiyuan/bloger" target="_blank">Bloger</a>.</span>
+      </footer>
+    </div>
+    <script src="https://unpkg.com/particle-bg/lib/particle-bg.umd.min.js"></script>
+    <script src="https://unpkg.com/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
+    <script type="text/javascript">
+      L2Dwidget.init();
+    </script>
+    <script>
+      particleBg('#header', {
+        count: 30,
+        color: '#fff'
+      });
+    </script>
+  </body>
+</html>

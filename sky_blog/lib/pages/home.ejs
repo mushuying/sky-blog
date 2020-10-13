@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="前端,<%= name %>,JavaScript,JS,博客,Blog" />
+    <meta name="description" content="<%= name %>'s Blog - <%= intro %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/images/common/favicon.ico" type="image/x-icon" />
+    <link href="/static/iconfonts/icons/icons.css" rel="stylesheet" />
+    <link href="/static/css/home.css" rel="stylesheet" />
+    <title><%= name %>'s Blog</title>
+  </head>
+  <body>
+    <%- htmlMenu %>
+    <div class="site-wrapper">
+      <header class="banner">
+        <!-- <div class="bg-cover"></div> -->
+        <div class="center">
+          <div class="links">
+            <% if (links) { -%>
+              <%_ links.forEach(function(link){ -%>
+                <%_ if (link.name === 'email') { -%>
+                  <a href="mailto:<%= link.link %>"><i class="icon icon-<%= link.name %>"></i></a>
+                <%_ } else { -%>
+                  <a href="<%= link.link %>" target="_blank"><i class="icon icon-<%= link.name %>"></i></a>
+                <%_ } -%>
+              <%_ }); -%>
+            <%_ } -%>
+          </div>
+          <h1 class="title"><%= name %>'s Blog</h1>
+          <p class="intro"> <%= intro %> </p>
+        </div>
+        <div class="scroll-down">
+          <i class="icon icon-down"></i>
+        </div>
+      </header>
+      <div class="list">
+        <% blogList.forEach(function(blog){ %>
+          <article>
+            <header>
+              <h1 class="post-title">
+                <a href="<%= blog.url %>"><%= blog.title %></a>
+                <%_ if(blog.top) { -%>
+                  <span class="top">置顶</span>
+                <%_ } -%>
+                <span class="type"><%= blog.type %></span>
+              </h1>
+            </header>
+            <section>
+              <p class="intro"><%= blog.intro %><a href="<%= blog.url %>">  »</a></p>
+            </section>
+            <section class="author"><img src="/static/images/common/favicon.ico" /><%= blog.author %> | <%= blog.date %></section>
+            <footer class="tag">
+              <i class="icon icon-tag"></i>
+              <% blog.tags.forEach(function(tag, i){ %>
+                <%= i === 0 ? '' : ', ' %><a href="/tag/<%= tag %>"><%= tag %></a>
+              <% }); %>
+            </footer>
+          </article>
+        <% }); %>
+      </div>
+      <footer class="copyright">
+        <span><b><a href="/"><%= name %></a></b> All rights reserved. Powerd by <a style="color: #f59200" href="https://github.com/PengJiyuan/bloger" target="_blank">Bloger</a>.</span>
+      </footer>
+    </div>
+    <script src="https://unpkg.com/particle-bg/lib/particle-bg.umd.min.js"></script>
+    <script src="https://unpkg.com/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
+    <script type="text/javascript">
+      L2Dwidget.init();
+    </script>
+    <script>
+      particleBg('.banner', {
+        color: 'rgba(255, 255, 255, 0.2)',
+        count: document.body.clientWidth < 800 ? 40 : 80,
+        line: true,
+        radius: 5
+      });
+    </script>
+  </body>
+</html>

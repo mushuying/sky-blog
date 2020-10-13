@@ -1,0 +1,27 @@
+{
+  "name": "Username",
+  "homepage": "localhost:5000",
+  "intro": "这里是简介",
+  "links": [{
+    "name": "github",
+    "link": "/"
+  }, {
+    "name": "zhihu",
+    "link": "/"
+  }, {
+    "name": "twitter",
+    "link": "/"
+  }, {
+    "name": "email",
+    "link": "/"
+  }],
+  "menus": [{
+    "name": "博客",
+    "link": "/"
+  }],
+  "followMe": [{
+    "name": "Github",
+    "link": "https://github.com"
+  }],
+  "disqus": false
+}
