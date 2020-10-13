@@ -7,7 +7,7 @@ sky-blog是一个帮助开发者快速构建博客的工具。通过后台管理
 
 ## 如何使用
  ```bash 
-   sky-blog,client_page、server
+   sky-blog、client_page、server
  ```
 #### sky-blog端
 
