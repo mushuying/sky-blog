@@ -13,16 +13,16 @@ const pathName = process.argv.slice(3).join('')
 const isRoot = fs.existsSync(path.resolve(root, '_posts'));
 const notRootError = chalk.red('\nError: You should in the root path of blog project!\n');
 
+
 program
-  .version(version)
-  .option('init [blogName]', 'init blog project')
-  .option('new [blog]', 'Create a new blog')
-  .option('build', 'Build blog')
-  .option('dev', 'Writing blog, watch mode.')
-  .option('iconfonts', 'Generate iconfonts.')
-  .parse(process.argv);
-if (tags == 'init') {
-  // 创建博客项目
+  .version(`sky_blog ${version.version}`, '-v -version')
+  .usage('<command> [options]');
+
+ program
+  .command('init [blogName]')
+  .description('init blog project')
+  .action(() => {
+    // 创建博客项目
   const projectName = pathName ? pathName : 'blog';
   const tplPath = path.resolve(__dirname, '../tpl');
   const projectPath = path.resolve(root, projectName);
@@ -52,40 +52,47 @@ if (tags == 'init') {
         });
       });
     });
-}
+});
 
-
-if (tags == 'new') {
-  // 在博客项目中创建文章md
-  if (isRoot) {
-    const postRoot = path.resolve(root, '_posts');
-    const date = new Date();
-    const thisYear = date.getFullYear().toString();
-    const template = `---\ntitle: ${pathName}\ndate: ${dateTime()}\nauthor: 作者\ntag: 标签\nintro: 简短的介绍这篇文章.\ntype: 原创\n---\n\nBlog Content`;
-    fs.ensureDirSync(path.resolve(postRoot, thisYear));
-    const allList = fs.readdirSync(path.resolve(postRoot, thisYear)).map(name => name.split('.md')[0]);
-    // name exist
-    if (~allList.indexOf(pathName)) {
-      console.log(chalk.red(`\nFile ${pathName}.md already exist!\n`));
-      process.exit(2);
+program
+  .command('new [blog]')
+  .description('Create a new blog')
+  .action(() => {
+    // 在博客项目中创建文章md
+    if (isRoot) {
+      const postRoot = path.resolve(root, '_posts');
+      const date = new Date();
+      const thisYear = date.getFullYear().toString();
+      const template = `---\ntitle: ${pathName}\ndate: ${dateTime()}\nauthor: 作者\ntag: 标签\nintro: 简短的介绍这篇文章.\ntype: 原创\n---\n\nBlog Content`;
+      fs.ensureDirSync(path.resolve(postRoot, thisYear));
+      const allList = fs.readdirSync(path.resolve(postRoot, thisYear)).map(name => name.split('.md')[0]);
+      // name exist
+      if (~allList.indexOf(pathName)) {
+        console.log(chalk.red(`\nFile ${pathName}.md already exist!\n`));
+        process.exit(2);
+      }
+      fs.outputFile(path.resolve(postRoot, thisYear, `${pathName}.md`), template, 'utf8', (err) => {
+        if (err) throw err;
+        console.log(chalk.green(`\nCreate new blog ${chalk.cyan(`${pathName}.md`)} done!\n`));
+      });
+    } else {
+      console.log(notRootError);
     }
-    fs.outputFile(path.resolve(postRoot, thisYear, `${pathName}.md`), template, 'utf8', (err) => {
-      if (err) throw err;
-      console.log(chalk.green(`\nCreate new blog ${chalk.cyan(`${pathName}.md`)} done!\n`));
-    });
-  } else {
-    console.log(notRootError);
-  }
-}
+  });
 
-if (tags == 'build') {
-//  md格式转化成html
-  if (isRoot) {
-    bulids()
-  } else {
-    console.log(notRootError);
-  }
-}
+  program
+  .command('build')
+  .description('Build blog')
+  .action(() => {
+    //  md格式转化成html
+    if (isRoot) {
+      bulids()
+    } else {
+      console.log(notRootError);
+    }
+  });
+  program.program.parse(process.argv);
+
 
 
 

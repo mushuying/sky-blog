@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const del = require('del');
-const gulp = require('gulp');
 const log = require('fancy-log');
 const mdpack = require('mdpack');
 const buildHome = require('./tasks/home');
